@@ -1,0 +1,25 @@
+# Datei: .github/workflows/bandit_check.yml
+name: Security Guard (Bandit)
+
+on: [push, pull_request]
+
+jobs:
+  bandit_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Bandit
+        run: pip install bandit
+
+      - name: Run Bandit Scan
+        # -r: rekursiv
+        # -ll: log level (wir wollen alles sehen)
+        # . : aktuelles Verzeichnis scannen
+        run: bandit -r -ll .
